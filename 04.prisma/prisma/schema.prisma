@@ -1,0 +1,27 @@
+
+// 指定Prisma Client生成器
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 数据源配置
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// 用户模型
+model User {
+  id        String    @id @default(uuid())
+  username  String    @unique
+  password  String
+  status    UserStatus
+  createdAt DateTime  @default(now()) @map("created_at")
+  updatedAt DateTime  @updatedAt @map("updated_at")
+}
+
+// 用户状态枚举
+enum UserStatus {
+  NORMAL
+  LOCKED
+}
